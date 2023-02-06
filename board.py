@@ -3,6 +3,7 @@ from constants import *
 import numpy
 
 class Board:
+    # Initializing the board with screen as an input
     def __init__(self, screen) -> None:
         self.screen = screen
         self.game_array = numpy.zeros((WINDOW_SIZE // CUBE_SIZE, WINDOW_SIZE // CUBE_SIZE))
@@ -10,8 +11,7 @@ class Board:
         self.turn = 1
         self.game_is_on = True
 
-        
-
+    # Drawing the board
     def draw_board(self):
         # Drawing vertical lines
         for x in range(1, VERTICAL_LINES + 1):
@@ -30,17 +30,17 @@ class Board:
             return True
         return False
     
-    # put mark on the field and change turn
+    # Putting mark on the field and changing turn
     def put_mark(self, pos):
         if self.is_available(pos):
             # -1 is cross
             if self.turn == -1:
-                # loading image of a cross
+                # Loading image of a cross
                 img = pygame.image.load("Tic_Tac_Toe/resources/cross.png")
                 img = pygame.transform.scale(img, (CUBE_SIZE // 1.5, CUBE_SIZE // 1.5))
             # 1 is dot
             elif self.turn == 1:
-                # loading image of a dot
+                # Loading image of a dot
                 img = pygame.image.load("Tic_Tac_Toe/resources/dot.png")
                 img = pygame.transform.scale(img, (CUBE_SIZE // 1.5, CUBE_SIZE // 1.5))
             self.game_array[pos[0]][pos[1]] = self.turn
@@ -75,7 +75,7 @@ class Board:
                     winning_row += 1
                 elif self.game_array[row][col] == -1:
                     winning_row += -1
-
+                # Checking if row is full of X or O
                 if winning_row == 3:
                     self.write_ending_text("Dot wins!")
                     self.draw_winning_line((0, row),(2, row))
@@ -95,7 +95,7 @@ class Board:
                     winning_col += 1
                 elif self.game_array[col][row] == -1:
                     winning_col += -1
-
+                # Checking if column is full of X or O
                 if winning_col == 3:
                     self.write_ending_text("Dot wins!")
                     self.draw_winning_line((row, 0),(row, 2))
